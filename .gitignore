@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+temp/
+bot.log
+*.docx
+!templates/docx/*.docx
+.venv/
+venv/
