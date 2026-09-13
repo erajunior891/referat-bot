@@ -53,10 +53,8 @@ async def search_duckduckgo(queries: list[str], lang: str = "ru", max_results_pe
     seen_urls = set()
 
     try:
-        loop = asyncio.get_event_loop()
-        raw_results = await loop.run_in_executor(
-            None,
-            lambda: _ddg_multi_search(queries, region, max_results_per_query)
+        raw_results = await asyncio.to_thread(
+            _ddg_multi_search, queries, region, max_results_per_query
         )
         for r in raw_results:
             url = r.get("url", "")
@@ -99,10 +97,8 @@ async def search_wikipedia(topic: str, ddg_results: list[dict[str, str]], lang: 
     wiki_lang = wiki_lang_map.get(lang, "ru")
 
     try:
-        loop = asyncio.get_event_loop()
-        text = await loop.run_in_executor(
-            None,
-            lambda: _wiki_smart_search(topic, ddg_results, wiki_lang, max_chars)
+        text = await asyncio.to_thread(
+            _wiki_smart_search, topic, ddg_results, wiki_lang, max_chars
         )
         if text:
             logger.info(f"Wikipedia ({wiki_lang}): найдена статья ({len(text)} символов)")

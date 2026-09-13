@@ -3,7 +3,11 @@ __pycache__/
 *.pyc
 temp/
 bot.log
+*.log
 *.docx
 !templates/docx/*.docx
 .venv/
 venv/
+.pytest_cache/
+.idea/
+.vscode/
